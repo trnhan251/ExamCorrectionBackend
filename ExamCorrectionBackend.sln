@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend", "ExamCorrectionBackend\ExamCorrectionBackend.csproj", "{E479F9F5-07CA-40EC-9DC4-CF922C31EC36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCorrectionBackend", "ExamCorrectionBackend\ExamCorrectionBackend.csproj", "{E479F9F5-07CA-40EC-9DC4-CF922C31EC36}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{665F3F47-5CDB-4E14-A5CE-AAD587804ECE}"
 EndProject
@@ -13,15 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8417141B-0903-4B4A-B162-8C8B2F5F3922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend.Application", "ExamCorrectionBackend.Application\ExamCorrectionBackend.Application.csproj", "{9C54CA4B-34B3-4A7B-9F60-0704A35517F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCorrectionBackend.Application", "ExamCorrectionBackend.Application\ExamCorrectionBackend.Application.csproj", "{9C54CA4B-34B3-4A7B-9F60-0704A35517F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend.Domain", "ExamCorrectionBackend.Domain\ExamCorrectionBackend.Domain.csproj", "{4E82B6B8-D944-47A4-864C-790649C167AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCorrectionBackend.Domain", "ExamCorrectionBackend.Domain\ExamCorrectionBackend.Domain.csproj", "{4E82B6B8-D944-47A4-864C-790649C167AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend.Persistence", "ExamCorrectionBackend.Persistence\ExamCorrectionBackend.Persistence.csproj", "{591F1464-560B-408C-A0BE-7E8B5624D8D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCorrectionBackend.Persistence", "ExamCorrectionBackend.Persistence\ExamCorrectionBackend.Persistence.csproj", "{591F1464-560B-408C-A0BE-7E8B5624D8D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend.Application.UnitTests", "ExamCorrectionBackend.Application.UnitTests\ExamCorrectionBackend.Application.UnitTests.csproj", "{419AC190-22B1-4350-87CC-850C78DC46DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCorrectionBackend.Application.UnitTests", "ExamCorrectionBackend.Application.UnitTests\ExamCorrectionBackend.Application.UnitTests.csproj", "{419AC190-22B1-4350-87CC-850C78DC46DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend.Persistence.UnitTests", "ExamCorrectionBackend.Persistence.UnitTests\ExamCorrectionBackend.Persistence.UnitTests.csproj", "{F7B04D3E-6D4F-42C7-B5F8-A9B99D31ED12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamCorrectionBackend.Persistence.UnitTests", "ExamCorrectionBackend.Persistence.UnitTests\ExamCorrectionBackend.Persistence.UnitTests.csproj", "{F7B04D3E-6D4F-42C7-B5F8-A9B99D31ED12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCorrectionBackend.Infrastructure", "ExamCorrectionBackend.Infrastructure\ExamCorrectionBackend.Infrastructure.csproj", "{770B6CDC-3F9C-4D9B-B757-8F188A6E6420}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{F7B04D3E-6D4F-42C7-B5F8-A9B99D31ED12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7B04D3E-6D4F-42C7-B5F8-A9B99D31ED12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7B04D3E-6D4F-42C7-B5F8-A9B99D31ED12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{770B6CDC-3F9C-4D9B-B757-8F188A6E6420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770B6CDC-3F9C-4D9B-B757-8F188A6E6420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770B6CDC-3F9C-4D9B-B757-8F188A6E6420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770B6CDC-3F9C-4D9B-B757-8F188A6E6420}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{591F1464-560B-408C-A0BE-7E8B5624D8D0} = {6651FBA6-419A-4172-8B79-F5C3D4B42901}
 		{419AC190-22B1-4350-87CC-850C78DC46DB} = {8417141B-0903-4B4A-B162-8C8B2F5F3922}
 		{F7B04D3E-6D4F-42C7-B5F8-A9B99D31ED12} = {8417141B-0903-4B4A-B162-8C8B2F5F3922}
+		{770B6CDC-3F9C-4D9B-B757-8F188A6E6420} = {6651FBA6-419A-4172-8B79-F5C3D4B42901}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6240D6DA-D55D-43E5-B33A-4D3E54180EF8}

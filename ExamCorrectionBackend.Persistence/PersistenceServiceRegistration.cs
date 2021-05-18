@@ -2,7 +2,7 @@
 
 namespace ExamCorrectionBackend.Persistence
 {
-    public class Class1
+    public class PersistenceServiceRegistration
     {
     }
 }
