@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExamCorrectionBackend.Application\ExamCorrectionBackend.Application.csproj" />
+    <ProjectReference Include="..\ExamCorrectionBackend.Persistence\ExamCorrectionBackend.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
