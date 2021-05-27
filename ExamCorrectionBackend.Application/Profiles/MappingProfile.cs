@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.Tracing;
+using AutoMapper;
 using ExamCorrectionBackend.Application.Dto;
 using ExamCorrectionBackend.Domain.Entities;
 
@@ -9,6 +10,8 @@ namespace ExamCorrectionBackend.Application.Profiles
         public MappingProfile()
         {
             CreateMap<Course, CourseDto>().ReverseMap();
+            CreateMap<Exam, ExamDto>()
+                .ForMember(des => des.CourseName, opt => opt.MapFrom(res => res.Course.Name));
         }
     }
 }

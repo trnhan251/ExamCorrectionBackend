@@ -12,8 +12,8 @@ namespace ExamCorrectionBackend.Domain.Entities
             StudentSolutions = new HashSet<StudentSolution>();
         }
 
-        public long Id { get; set; }
-        public long ExamId { get; set; }
+        public int Id { get; set; }
+        public int ExamId { get; set; }
         public string Description { get; set; }
         public string Solution { get; set; }
 

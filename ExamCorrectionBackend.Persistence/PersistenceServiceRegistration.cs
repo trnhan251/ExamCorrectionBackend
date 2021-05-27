@@ -14,6 +14,7 @@ namespace ExamCorrectionBackend.Persistence
                 options.UseSqlServer("Name=ConnectionStrings.ExamCorrection"));
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IExamRepository, ExamRepository>();
             return services;
         }
     }

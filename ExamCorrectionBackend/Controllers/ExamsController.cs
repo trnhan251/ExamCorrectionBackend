@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExamCorrectionBackend.Application.Dto;
-using ExamCorrectionBackend.Application.Features.Courses.Commands.CreateCourse;
-using ExamCorrectionBackend.Application.Features.Courses.Commands.DeleteCourse;
-using ExamCorrectionBackend.Application.Features.Courses.Commands.UpdateCourse;
-using ExamCorrectionBackend.Application.Features.Courses.Queries.GetAllCourses;
-using ExamCorrectionBackend.Application.Features.Courses.Queries.GetCourse;
+using ExamCorrectionBackend.Application.Features.Exams.Commands.CreateExam;
+using ExamCorrectionBackend.Application.Features.Exams.Commands.DeleteExam;
+using ExamCorrectionBackend.Application.Features.Exams.Commands.UpdateExam;
+using ExamCorrectionBackend.Application.Features.Exams.Queries.GetAllExams;
+using ExamCorrectionBackend.Application.Features.Exams.Queries.GetExam;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -23,63 +23,63 @@ namespace ExamCorrectionBackend.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CoursesController : ControllerBase
+    public class ExamsController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CoursesController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        public ExamsController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        // GET: api/<CoursesController>
+        // GET: api/<ExamsController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<string>>> Get()
+        public async Task<ActionResult<IEnumerable<ExamDto>>> Get()
         {
             var userId = GetUserIdFromHttpContext();
-            var request = new GetAllCoursesRequest() {OwnerId = userId};
+            var request = new GetAllExamsRequest() {UserId = userId};
             var results = await _mediator.Send(request);
             return results != null ? Ok(results) : BadRequest();
         }
 
-        // GET api/<CoursesController>/5
+        // GET api/<ExamsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CourseDto>> Get(int id)
+        public async Task<ActionResult<ExamDto>> Get(int id)
         {
             var userId = GetUserIdFromHttpContext();
-            var request = new GetCourseRequest() {CourseId = id, UserId = userId};
+            var request = new GetExamRequest() { ExamId = id, UserId = userId };
             var result = await _mediator.Send(request);
             return result != null ? Ok(result) : BadRequest();
         }
 
-        // POST api/<CoursesController>
+        // POST api/<ExamsController>
         [HttpPost]
-        public async Task<ActionResult<CourseDto>> Post([FromBody] CourseDto dto)
+        public async Task<ActionResult<ExamDto>> Post([FromBody] ExamDto dto)
         {
             var userId = GetUserIdFromHttpContext();
-            var request = new CreateCourseRequest() {CourseDto = dto, OwnerId = userId};
+            var request = new CreateExamRequest() { ExamDto = dto, UserId = userId };
             var result = await _mediator.Send(request);
             return result != null ? Ok(result) : BadRequest();
         }
 
-        // PUT api/<CoursesController>/5
+        // PUT api/<ExamsController>/5
         [HttpPut]
-        public async Task<ActionResult<CourseDto>> Put([FromBody] CourseDto dto)
+        public async Task<ActionResult<ExamDto>> Put([FromBody] ExamDto dto)
         {
             var userId = GetUserIdFromHttpContext();
-            var request = new UpdateCourseRequest() { CourseDto = dto, OwnerId = userId };
+            var request = new UpdateExamRequest() { ExamDto = dto, UserId = userId };
             var result = await _mediator.Send(request);
             return result != null ? Ok(result) : BadRequest();
         }
 
-        // DELETE api/<CoursesController>/5
+        // DELETE api/<ExamsController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CourseDto>> Delete(int id)
+        public async Task<ActionResult<ExamDto>> Delete(int id)
         {
             var userId = GetUserIdFromHttpContext();
-            var request = new DeleteCourseRequest() { CourseId = id, OwnerId = userId };
+            var request = new DeleteExamRequest() { ExamId = id, UserId = userId };
             var result = await _mediator.Send(request);
             return result != null ? Ok(result) : BadRequest();
         }

@@ -8,6 +8,7 @@ namespace ExamCorrectionBackend.Application.Contracts.Persistence
     {
         Task<T> GetByGuIdAsync(Guid id);
         Task<T> GetByIdAsync(int id);
+        Task<T> GetByLongIdAsync(long id);
         Task<IReadOnlyList<T>> ListAllAsync();
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);

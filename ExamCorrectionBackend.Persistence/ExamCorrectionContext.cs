@@ -37,9 +37,7 @@ namespace ExamCorrectionBackend.Persistence
 
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
@@ -55,9 +53,7 @@ namespace ExamCorrectionBackend.Persistence
 
             modelBuilder.Entity<Exam>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CourseId).HasColumnName("courseId");
 
@@ -85,9 +81,7 @@ namespace ExamCorrectionBackend.Persistence
 
             modelBuilder.Entity<ExamTask>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
@@ -108,9 +102,7 @@ namespace ExamCorrectionBackend.Persistence
 
             modelBuilder.Entity<StudentSolution>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Answer)
                     .IsRequired()

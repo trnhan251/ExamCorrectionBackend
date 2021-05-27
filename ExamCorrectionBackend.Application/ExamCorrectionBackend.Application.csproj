@@ -12,8 +12,15 @@
     <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="Features\Blob\Commands\" />
     <Folder Include="Features\Blob\Queries\" />
-    <Folder Include="Features\Courses\Commands\" />
+    <Folder Include="Features\Courses\Commands\CreateCourse\" />
+    <Folder Include="Features\Courses\Commands\DeleteCourse\" />
+    <Folder Include="Features\Courses\Commands\UpdateCourse\" />
     <Folder Include="Features\Courses\Queries\GetAllCourses\" />
+    <Folder Include="Features\Courses\Queries\GetCourse\" />
+    <Folder Include="Features\Exams\Commands\CreateExam\" />
+    <Folder Include="Features\Exams\Commands\DeleteExam\" />
+    <Folder Include="Features\Exams\Commands\UpdateExam\" />
+    <Folder Include="Features\Exams\Queries\GetAllExams\" />
     <Folder Include="Models\" />
     <Folder Include="Profiles\" />
   </ItemGroup>

@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ExamCorrectionBackend.Persistence\ExamCorrectionBackend.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+  </ItemGroup>
+
 </Project>

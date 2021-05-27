@@ -26,6 +26,11 @@ namespace ExamCorrectionBackend.Persistence.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
+        public async Task<T> GetByLongIdAsync(long id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
