@@ -1,8 +1,16 @@
 ﻿using System;
+using System.Reflection;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamCorrectionBackend.Application
 {
-    public class ApplicationServiceRegistration
+    public static class ApplicationServiceRegistration
     {
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            return services;
+        }
     }
 }

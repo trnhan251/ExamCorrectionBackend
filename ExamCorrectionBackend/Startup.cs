@@ -11,11 +11,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExamCorrectionBackend.Application;
+using ExamCorrectionBackend.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 
 namespace ExamCorrectionBackend
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,8 +32,34 @@ namespace ExamCorrectionBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins("http://localhost:6420")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(options =>
+                    {
+                        Configuration.Bind("AzureAdB2C", options);
+
+                        options.TokenValidationParameters.NameClaimType = "name";
+                    },
+                    options => { Configuration.Bind("AzureAdB2C", options); });
 
             services.AddControllers();
+
+            services.AddApplicationServices();
+
+            services.AddPersistenceServices();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExamCorrectionBackend", Version = "v1" });
@@ -47,6 +79,10 @@ namespace ExamCorrectionBackend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
