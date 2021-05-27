@@ -21,6 +21,10 @@
     <Folder Include="Features\Exams\Commands\DeleteExam\" />
     <Folder Include="Features\Exams\Commands\UpdateExam\" />
     <Folder Include="Features\Exams\Queries\GetAllExams\" />
+    <Folder Include="Features\ExamTasks\Commands\CreateExamTask\" />
+    <Folder Include="Features\ExamTasks\Commands\DeleteExamTask\" />
+    <Folder Include="Features\ExamTasks\Commands\UpdateExamTask\" />
+    <Folder Include="Features\ExamTasks\Queries\GetExamTask\" />
     <Folder Include="Models\" />
     <Folder Include="Profiles\" />
   </ItemGroup>

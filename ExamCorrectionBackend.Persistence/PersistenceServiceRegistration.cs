@@ -1,5 +1,6 @@
 ﻿using System;
 using ExamCorrectionBackend.Application.Contracts.Persistence;
+using ExamCorrectionBackend.Domain.Entities;
 using ExamCorrectionBackend.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace ExamCorrectionBackend.Persistence
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IExamRepository, ExamRepository>();
+            services.AddScoped<IExamTaskRepository, ExamTaskRepository>();
             return services;
         }
     }
