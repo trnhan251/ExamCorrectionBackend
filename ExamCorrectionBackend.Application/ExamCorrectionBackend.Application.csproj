@@ -25,6 +25,11 @@
     <Folder Include="Features\ExamTasks\Commands\DeleteExamTask\" />
     <Folder Include="Features\ExamTasks\Commands\UpdateExamTask\" />
     <Folder Include="Features\ExamTasks\Queries\GetExamTask\" />
+    <Folder Include="Features\StudentSolutions\Commands\CreateStudentSolution\" />
+    <Folder Include="Features\StudentSolutions\Commands\DeleteStudentSolution\" />
+    <Folder Include="Features\StudentSolutions\Commands\UpdateStudentSolution\" />
+    <Folder Include="Features\StudentSolutions\Queries\GetAllStudentSolutionsFromExamTask\" />
+    <Folder Include="Features\StudentSolutions\Queries\GetStudentSolution\" />
     <Folder Include="Models\" />
     <Folder Include="Profiles\" />
   </ItemGroup>

@@ -13,6 +13,7 @@ namespace ExamCorrectionBackend.Application.Profiles
             CreateMap<Exam, ExamDto>()
                 .ForMember(des => des.CourseName, opt => opt.MapFrom(res => res.Course.Name));
             CreateMap<ExamTask, ExamTaskDto>();
+            CreateMap<StudentSolution, StudentSolutionDto>();
         }
     }
 }

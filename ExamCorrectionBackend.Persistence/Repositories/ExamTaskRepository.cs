@@ -24,8 +24,10 @@ namespace ExamCorrectionBackend.Persistence.Repositories
 
         public async Task<ExamTask> GetByIdIncludedExam(int id)
         {
-            var result = await _context.ExamTasks.Include(x => x.Exam).Include(x => x.Exam.Course)
-                .Where(x => x.Id == id).FirstOrDefaultAsync();
+            var result = await _context.ExamTasks
+                .Include(x => x.Exam.Course)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
             return result;
         }
     }
