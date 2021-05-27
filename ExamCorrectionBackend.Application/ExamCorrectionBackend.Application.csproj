@@ -12,10 +12,15 @@
     <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="Features\Blob\Commands\" />
     <Folder Include="Features\Blob\Queries\" />
+    <Folder Include="Features\Courses\Commands\" />
+    <Folder Include="Features\Courses\Queries\GetAllCourses\" />
     <Folder Include="Models\" />
+    <Folder Include="Profiles\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.8.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

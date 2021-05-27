@@ -1,4 +1,7 @@
 ﻿using System;
+using ExamCorrectionBackend.Application.Contracts.Persistence;
+using ExamCorrectionBackend.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamCorrectionBackend.Persistence
@@ -7,6 +10,10 @@ namespace ExamCorrectionBackend.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
+            services.AddDbContext<ExamCorrectionContext>(options =>
+                options.UseSqlServer("Name=ConnectionStrings.ExamCorrection"));
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<ICourseRepository, CourseRepository>();
             return services;
         }
     }
