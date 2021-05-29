@@ -99,3 +99,7 @@ GO
 
 ALTER TABLE [ExamTasks]
 ADD taskOrder INTEGER; 
+
+
+ALTER TABLE [StudentSolutions]
+ADD score DECIMAL; 

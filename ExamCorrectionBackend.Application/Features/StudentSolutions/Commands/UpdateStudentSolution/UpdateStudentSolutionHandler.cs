@@ -32,6 +32,7 @@ namespace ExamCorrectionBackend.Application.Features.StudentSolutions.Commands.U
 
             entity.Answer = dto.Answer;
             entity.StudentId = dto.StudentId;
+            entity.Score = dto.Score;
 
             var result = await _repository.UpdateAsync(entity);
 

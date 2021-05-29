@@ -110,6 +110,10 @@ namespace ExamCorrectionBackend.Persistence
                     .IsRequired()
                     .HasColumnName("answer");
 
+                entity.Property(e => e.Score)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("score");
+
                 entity.Property(e => e.StudentId)
                     .IsRequired()
                     .HasColumnName("studentId");

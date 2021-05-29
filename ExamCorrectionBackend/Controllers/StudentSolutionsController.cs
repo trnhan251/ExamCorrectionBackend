@@ -148,7 +148,7 @@ namespace ExamCorrectionBackend.Controllers
         }
 
         [HttpPost("{id}/Score")]
-        public async Task<ActionResult<double>> ScoreStudentSolution(int id)
+        public async Task<ActionResult<StudentSolutionDto>> ScoreStudentSolution(int id)
         {
             var client = _httpClientFactory.CreateClient();
 
@@ -165,8 +165,12 @@ namespace ExamCorrectionBackend.Controllers
             using var httpResponse = await client.PostAsync("http://127.0.0.1:5002/api/predict", jsonObject);
             httpResponse.EnsureSuccessStatusCode();
             var responseBody = await httpResponse.Content.ReadAsStringAsync();
-            var result = Double.Parse(responseBody, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
-            return Ok(result);
+            var scoreResult = Decimal.Parse(responseBody, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
+
+            studentSolution.Score = scoreResult;
+            var result = await _mediator.Send(new UpdateStudentSolutionRequest()
+                {StudentSolutionDto = studentSolution, UserId = GetUserIdFromHttpContext()});
+            return result != null ? Ok(result) : BadRequest();
         }
 
         private List<StudentSolutionDto> GetStudentSolutions(string fileName, List<ExamTaskDto> examTasks)
