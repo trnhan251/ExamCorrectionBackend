@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ExamCorrectionBackend.Application.Dto;
+using ExamCorrectionBackend.Application.Features.Dataset.Commands.CreateDatasetFromStudentSolution;
 using ExamCorrectionBackend.Application.Features.ExamTasks.Commands.CreateExamTask;
 using ExamCorrectionBackend.Application.Features.ExamTasks.Queries.GetAllExamTasksFromExam;
 using ExamCorrectionBackend.Application.Features.ExamTasks.Queries.GetExamTask;
@@ -194,6 +195,15 @@ namespace ExamCorrectionBackend.Controllers
             }
 
             return studentSolutionDtos;
+        }
+
+        [HttpPost("{id}/AddIntoDataset")]
+        public async Task<ActionResult<DatasetDto>> AddIntoDataset(int id)
+        {
+            var request = new CreateDatasetFromStudentSolutionRequest()
+                {StudentSolutionId = id, UserId = GetUserIdFromHttpContext()};
+            var result = await _mediator.Send(request);
+            return result != null ? Ok(result) : BadRequest();
         }
 
         private string GetUserIdFromHttpContext()

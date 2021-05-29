@@ -8,6 +8,7 @@
     -t Exams `
     -t ExamTasks `
     -t StudentSolutions `
+    -t Dataset `
     -v  `
     -f  `
   Name=ConnectionStrings.ExamCorrection `

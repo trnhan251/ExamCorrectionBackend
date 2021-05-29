@@ -96,6 +96,24 @@ ALTER TABLE [dbo].[StudentSolutions] CHECK CONSTRAINT [FK_StudentSolutions_ExamT
 GO
 
 
+USE [ExamCorrection]
+GO
+
+/****** Object:  Table [dbo].[StudentSolutions]    Script Date: 27.05.2021 14:51:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Dataset](
+	[id] INTEGER IDENTITY(1, 1) PRIMARY KEY NOT NULL,
+	[sentence1] [nvarchar](max) NOT NULL,
+	[sentence2] [nvarchar](max) NOT NULL,
+	[score] Decimal NOT NULL,
+    [isSimilar] bit NOT NULL)
+GO
+
 
 ALTER TABLE [ExamTasks]
 ADD taskOrder INTEGER; 
@@ -103,3 +121,6 @@ ADD taskOrder INTEGER;
 
 ALTER TABLE [StudentSolutions]
 ADD score DECIMAL; 
+
+ALTER TABLE [Dataset]
+ADD createdDate date; 

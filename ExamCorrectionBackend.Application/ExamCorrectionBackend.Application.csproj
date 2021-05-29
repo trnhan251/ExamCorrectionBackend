@@ -17,6 +17,10 @@
     <Folder Include="Features\Courses\Commands\UpdateCourse\" />
     <Folder Include="Features\Courses\Queries\GetAllCourses\" />
     <Folder Include="Features\Courses\Queries\GetCourse\" />
+    <Folder Include="Features\Dataset\Commands\DeleteDataset\" />
+    <Folder Include="Features\Dataset\Commands\UpdateDataset\" />
+    <Folder Include="Features\Dataset\Queries\GetAllDataset\" />
+    <Folder Include="Features\Dataset\Queries\GetDataset\" />
     <Folder Include="Features\Exams\Commands\CreateExam\" />
     <Folder Include="Features\Exams\Commands\DeleteExam\" />
     <Folder Include="Features\Exams\Commands\UpdateExam\" />

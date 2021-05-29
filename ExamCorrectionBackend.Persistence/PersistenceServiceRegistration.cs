@@ -18,6 +18,7 @@ namespace ExamCorrectionBackend.Persistence
             services.AddScoped<IExamRepository, ExamRepository>();
             services.AddScoped<IExamTaskRepository, ExamTaskRepository>();
             services.AddScoped<IStudentSolutionRepository, StudentSolutionRepository>();
+            services.AddScoped<IDatasetRepository, DatasetRepository>();
             return services;
         }
     }

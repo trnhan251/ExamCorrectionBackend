@@ -19,6 +19,7 @@ namespace ExamCorrectionBackend.Persistence
         }
 
         public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Dataset> Datasets { get; set; }
         public virtual DbSet<Exam> Exams { get; set; }
         public virtual DbSet<ExamTask> ExamTasks { get; set; }
         public virtual DbSet<StudentSolution> StudentSolutions { get; set; }
@@ -49,6 +50,31 @@ namespace ExamCorrectionBackend.Persistence
                 entity.Property(e => e.OwnerId)
                     .IsRequired()
                     .HasColumnName("ownerId");
+            });
+
+            modelBuilder.Entity<Dataset>(entity =>
+            {
+                entity.ToTable("Dataset");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("date")
+                    .HasColumnName("createdDate");
+
+                entity.Property(e => e.IsSimilar).HasColumnName("isSimilar");
+
+                entity.Property(e => e.Score)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("score");
+
+                entity.Property(e => e.Sentence1)
+                    .IsRequired()
+                    .HasColumnName("sentence1");
+
+                entity.Property(e => e.Sentence2)
+                    .IsRequired()
+                    .HasColumnName("sentence2");
             });
 
             modelBuilder.Entity<Exam>(entity =>
