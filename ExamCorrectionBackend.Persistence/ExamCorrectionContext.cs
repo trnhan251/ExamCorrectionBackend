@@ -93,6 +93,8 @@ namespace ExamCorrectionBackend.Persistence
                     .IsRequired()
                     .HasColumnName("solution");
 
+                entity.Property(e => e.TaskOrder).HasColumnName("taskOrder");
+
                 entity.HasOne(d => d.Exam)
                     .WithMany(p => p.ExamTasks)
                     .HasForeignKey(d => d.ExamId)

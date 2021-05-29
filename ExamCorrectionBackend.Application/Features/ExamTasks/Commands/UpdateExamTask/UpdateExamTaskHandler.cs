@@ -33,6 +33,7 @@ namespace ExamCorrectionBackend.Application.Features.ExamTasks.Commands.UpdateEx
 
             entity.Description = dto.Description;
             entity.Solution = dto.Solution;
+            entity.TaskOrder = dto.TaskOrder;
 
             var result = await _repository.UpdateAsync(entity);
             

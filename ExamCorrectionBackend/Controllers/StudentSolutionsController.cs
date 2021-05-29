@@ -1,17 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ExamCorrectionBackend.Application.Dto;
+using ExamCorrectionBackend.Application.Features.ExamTasks.Commands.CreateExamTask;
+using ExamCorrectionBackend.Application.Features.ExamTasks.Queries.GetAllExamTasksFromExam;
+using ExamCorrectionBackend.Application.Features.ExamTasks.Queries.GetExamTask;
 using ExamCorrectionBackend.Application.Features.StudentSolutions.Commands.CreateStudentSolution;
 using ExamCorrectionBackend.Application.Features.StudentSolutions.Commands.DeleteStudentSolution;
 using ExamCorrectionBackend.Application.Features.StudentSolutions.Commands.UpdateStudentSolution;
 using ExamCorrectionBackend.Application.Features.StudentSolutions.Queries.GetAllStudentSolutionsFromExamTask;
 using ExamCorrectionBackend.Application.Features.StudentSolutions.Queries.GetStudentSolution;
+using ExamCorrectionBackend.Models;
+using ExcelDataReader;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Web;
 
@@ -27,11 +38,16 @@ namespace ExamCorrectionBackend.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebHostEnvironment _environment;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public StudentSolutionsController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        public StudentSolutionsController(IMediator mediator, IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment environment, IHttpClientFactory httpClientFactory)
         {
             _mediator = mediator;
             _httpContextAccessor = httpContextAccessor;
+            _environment = environment;
+            _httpClientFactory = httpClientFactory;
         }
 
         // GET: api/<StudentSolutionsController>
@@ -82,6 +98,98 @@ namespace ExamCorrectionBackend.Controllers
             var request = new DeleteStudentSolutionRequest() { StudentSolutionId = id, UserId = userId };
             var result = await _mediator.Send(request);
             return result != null ? Ok(result) : BadRequest();
+        }
+
+        [HttpPost("Excel")]
+        public async Task<ActionResult<IEnumerable<StudentSolutionDto>>> UploadExcel([FromQuery] int examId, [FromServices] IHostingEnvironment hostingEnvironment)
+        {
+            try
+            {
+                var studentSolutionResults = new List<StudentSolutionDto>();
+
+                foreach (var file in Request.Form.Files.OfType<IFormFile>())
+                {
+                    if (file.Length <= 0)
+                        return null;
+
+                    if (!Directory.Exists(_environment.WebRootPath + "\\Upload\\"))
+                    {
+                        Directory.CreateDirectory(_environment.WebRootPath + "\\Upload");
+                    }
+                    await using FileStream fileStream =
+                        System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + file.FileName);
+                    await file.CopyToAsync(fileStream);
+                    fileStream.Flush();
+                    fileStream.Close();
+
+                    var examTasks = await _mediator.Send(new GetAllExamTasksFromExamRequest()
+                        { ExamId = examId, UserId = GetUserIdFromHttpContext() });
+
+                    var studentSolutions = 
+                        this.GetStudentSolutions(_environment.WebRootPath + "\\Upload\\" + file.FileName, examTasks);
+
+                    var userId = GetUserIdFromHttpContext();
+
+                    foreach (var studentSolution in studentSolutions)
+                    {
+                        var request = new CreateStudentSolutionRequest() { StudentSolutionDto = studentSolution, UserId = userId };
+                        var result = await _mediator.Send(request);
+                        studentSolutionResults.Add(result);
+                    }
+                }
+
+                return Ok(studentSolutionResults);
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        [HttpPost("{id}/Score")]
+        public async Task<ActionResult<double>> ScoreStudentSolution(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            var studentSolution = await _mediator.Send(new GetStudentSolutionRequest()
+                {StudentSolutionId = id, UserId = GetUserIdFromHttpContext()});
+            var examTask = await _mediator.Send(new GetExamTaskRequest()
+                {ExamTaskId = studentSolution.TaskId, UserId = GetUserIdFromHttpContext()});
+
+            var scoreRequestObject = new ScoreRequest()
+                {Sentence1 = examTask.Solution, Sentence2 = studentSolution.Answer};
+            var jsonObject = new StringContent(JsonSerializer.Serialize(scoreRequestObject), Encoding.UTF8,
+                "application/json");
+
+            using var httpResponse = await client.PostAsync("http://127.0.0.1:5002/api/predict", jsonObject);
+            httpResponse.EnsureSuccessStatusCode();
+            var responseBody = await httpResponse.Content.ReadAsStringAsync();
+            var result = Double.Parse(responseBody, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
+            return Ok(result);
+        }
+
+        private List<StudentSolutionDto> GetStudentSolutions(string fileName, List<ExamTaskDto> examTasks)
+        {
+            var studentSolutionDtos = new List<StudentSolutionDto>();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using var stream = System.IO.File.Open(fileName, FileMode.Open, FileAccess.Read);
+            using var reader = ExcelReaderFactory.CreateReader(stream);
+            while (reader.Read())
+            {
+                var taskId = examTasks.Find(x =>
+                    x.TaskOrder == Int32.Parse(reader.GetValue(0).ToString() ?? throw new InvalidOperationException()))?.Id;
+
+                if (taskId != null)
+                    studentSolutionDtos.Add(new StudentSolutionDto()
+                    {
+                        TaskId = (int) taskId,
+                        StudentId = reader.GetValue(1).ToString(),
+                        Answer = reader.GetValue(2).ToString()
+                    });
+            }
+
+            return studentSolutionDtos;
         }
 
         private string GetUserIdFromHttpContext()

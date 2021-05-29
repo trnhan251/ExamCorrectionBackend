@@ -25,6 +25,7 @@
     <Folder Include="Features\ExamTasks\Commands\DeleteExamTask\" />
     <Folder Include="Features\ExamTasks\Commands\UpdateExamTask\" />
     <Folder Include="Features\ExamTasks\Queries\GetExamTask\" />
+    <Folder Include="Features\ExcelUploads\Commands\UploadExcelExamTasks\" />
     <Folder Include="Features\StudentSolutions\Commands\CreateStudentSolution\" />
     <Folder Include="Features\StudentSolutions\Commands\DeleteStudentSolution\" />
     <Folder Include="Features\StudentSolutions\Commands\UpdateStudentSolution\" />

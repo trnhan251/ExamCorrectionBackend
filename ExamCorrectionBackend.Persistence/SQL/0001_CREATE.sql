@@ -97,3 +97,5 @@ GO
 
 
 
+ALTER TABLE [ExamTasks]
+ADD taskOrder INTEGER; 

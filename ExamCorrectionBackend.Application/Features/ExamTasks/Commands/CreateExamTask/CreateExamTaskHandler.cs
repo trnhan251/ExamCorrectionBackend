@@ -38,7 +38,8 @@ namespace ExamCorrectionBackend.Application.Features.ExamTasks.Commands.CreateEx
             {
                 ExamId = dto.ExamId,
                 Description = dto.Description,
-                Solution = dto.Solution
+                Solution = dto.Solution,
+                TaskOrder = dto.TaskOrder
             };
 
             var result = await _repository.AddAsync(entity);

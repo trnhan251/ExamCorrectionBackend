@@ -60,6 +60,8 @@ namespace ExamCorrectionBackend
 
             services.AddPersistenceServices();
 
+            services.AddHttpClient();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExamCorrectionBackend", Version = "v1" });
