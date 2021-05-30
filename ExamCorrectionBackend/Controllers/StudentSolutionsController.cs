@@ -148,32 +148,6 @@ namespace ExamCorrectionBackend.Controllers
             }
         }
 
-        [HttpPost("{id}/Score")]
-        public async Task<ActionResult<StudentSolutionDto>> ScoreStudentSolution(int id)
-        {
-            var client = _httpClientFactory.CreateClient();
-
-            var studentSolution = await _mediator.Send(new GetStudentSolutionRequest()
-                {StudentSolutionId = id, UserId = GetUserIdFromHttpContext()});
-            var examTask = await _mediator.Send(new GetExamTaskRequest()
-                {ExamTaskId = studentSolution.TaskId, UserId = GetUserIdFromHttpContext()});
-
-            var scoreRequestObject = new ScoreRequest()
-                {Sentence1 = examTask.Solution, Sentence2 = studentSolution.Answer};
-            var jsonObject = new StringContent(JsonSerializer.Serialize(scoreRequestObject), Encoding.UTF8,
-                "application/json");
-
-            using var httpResponse = await client.PostAsync("http://127.0.0.1:5002/api/predict", jsonObject);
-            httpResponse.EnsureSuccessStatusCode();
-            var responseBody = await httpResponse.Content.ReadAsStringAsync();
-            var scoreResult = Decimal.Parse(responseBody, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
-
-            studentSolution.Score = scoreResult;
-            var result = await _mediator.Send(new UpdateStudentSolutionRequest()
-                {StudentSolutionDto = studentSolution, UserId = GetUserIdFromHttpContext()});
-            return result != null ? Ok(result) : BadRequest();
-        }
-
         private List<StudentSolutionDto> GetStudentSolutions(string fileName, List<ExamTaskDto> examTasks)
         {
             var studentSolutionDtos = new List<StudentSolutionDto>();
@@ -195,6 +169,32 @@ namespace ExamCorrectionBackend.Controllers
             }
 
             return studentSolutionDtos;
+        }
+
+        [HttpPost("{id}/Score")]
+        public async Task<ActionResult<StudentSolutionDto>> ScoreStudentSolution(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            var studentSolution = await _mediator.Send(new GetStudentSolutionRequest()
+                { StudentSolutionId = id, UserId = GetUserIdFromHttpContext() });
+            var examTask = await _mediator.Send(new GetExamTaskRequest()
+                { ExamTaskId = studentSolution.TaskId, UserId = GetUserIdFromHttpContext() });
+
+            var scoreRequestObject = new ScoreRequest()
+                { Sentence1 = examTask.Solution, Sentence2 = studentSolution.Answer };
+            var jsonObject = new StringContent(JsonSerializer.Serialize(scoreRequestObject), Encoding.UTF8,
+                "application/json");
+
+            using var httpResponse = await client.PostAsync("http://127.0.0.1:5002/api/predict", jsonObject);
+            httpResponse.EnsureSuccessStatusCode();
+            var responseBody = await httpResponse.Content.ReadAsStringAsync();
+            var scoreResult = Decimal.Parse(responseBody, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
+
+            studentSolution.Score = scoreResult;
+            var result = await _mediator.Send(new UpdateStudentSolutionRequest()
+                { StudentSolutionDto = studentSolution, UserId = GetUserIdFromHttpContext() });
+            return result != null ? Ok(result) : BadRequest();
         }
 
         [HttpPost("{id}/AddIntoDataset")]
