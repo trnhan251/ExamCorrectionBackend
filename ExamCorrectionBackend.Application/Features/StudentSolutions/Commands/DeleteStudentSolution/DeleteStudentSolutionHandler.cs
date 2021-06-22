@@ -29,7 +29,7 @@ namespace ExamCorrectionBackend.Application.Features.StudentSolutions.Commands.D
             if (!entity.Task.Exam.Course.OwnerId.Equals(request.UserId))
                 throw new Exception("Not allowed to read this student solution");
 
-            var result = _repository.DeleteAsync(entity);
+            var result = await _repository.DeleteAsync(entity);
             
             return _mapper.Map<StudentSolutionDto>(result);
         }
