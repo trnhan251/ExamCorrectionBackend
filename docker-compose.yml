@@ -1,0 +1,35 @@
+# Source: https://www.jetbrains.com/dotnet/guide/tutorials/docker-dotnet/dotnet-docker-compose/
+version: '3.4'
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: mssql
+    hostname: mssql
+    volumes:
+      - ./datavolume:/var/opt/mssql/data
+    environment:
+      SA_PASSWORD: "myPassword?"
+      ACCEPT_EULA: "Y"
+    restart: unless-stopped    
+    ports:
+      # So we can access the database
+      # From a tool like JetBrains Rider
+      # Optional for this demo
+      - "1433:1433" 
+
+  exam-backend:
+    container_name: exam-backend
+    image: trnhan251/exam-backend
+    build:
+      context: .
+      dockerfile: ../ExamCorrectionBackend/ExamCorrectionBackend/Dockerfile
+    depends_on:
+      - mssql
+    ports:
+      - "5001:80"
+
+  exam-ui:
+    container_name: exam-ui
+    image: trnhan251/exam-ui
+    ports:
+      - "6420:80"

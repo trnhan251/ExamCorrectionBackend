@@ -67,7 +67,7 @@ namespace ExamCorrectionBackend.Controllers
         {
             var request = new CreateDatasetRequest() {DatasetDto = dto};
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<DatasetDto>) Ok(result) : BadRequest();
         }
 
         // PUT api/<DatasetController>
@@ -76,7 +76,7 @@ namespace ExamCorrectionBackend.Controllers
         {
             var request = new UpdateDatasetRequest() { DatasetDto = dto };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<DatasetDto>) Ok(result) : BadRequest();
         }
 
         // DELETE api/<DatasetController>/5
@@ -85,7 +85,7 @@ namespace ExamCorrectionBackend.Controllers
         {
             var request = new DeleteDatasetRequest() { DatasetId = id };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<DatasetDto>) Ok(result) : BadRequest();
         }
 
         [HttpPost("Excel")]

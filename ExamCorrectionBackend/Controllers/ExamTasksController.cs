@@ -48,7 +48,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new GetAllExamTasksFromExamRequest() {ExamId = examId, UserId = userId};
             var results = await _mediator.Send(request);
-            return results != null ? Ok(results) : BadRequest();
+            return results != null ? (ActionResult<IEnumerable<ExamTaskDto>>) Ok(results) : BadRequest();
         }
 
         // GET api/<ExamTasksController>/5
@@ -58,7 +58,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new GetExamTaskRequest() { ExamTaskId = id, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<ExamTaskDto>) Ok(result) : BadRequest();
         }
 
         // POST api/<ExamTasksController>
@@ -68,7 +68,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new CreateExamTaskRequest() { ExamTaskDto = dto, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<ExamTaskDto>) Ok(result) : BadRequest();
         }
 
         // PUT api/<ExamTasksController>/5
@@ -78,7 +78,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new UpdateExamTaskRequest() { ExamTaskDto = dto, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<ExamTaskDto>) Ok(result) : BadRequest();
         }
 
         // DELETE api/<ExamTasksController>/5
@@ -88,7 +88,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new DeleteExamTaskRequest() { ExamTaskId = id, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<ExamTaskDto>) Ok(result) : BadRequest();
         }
 
         [HttpPost("Excel")]

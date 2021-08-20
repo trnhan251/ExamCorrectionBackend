@@ -38,10 +38,9 @@ namespace ExamCorrectionBackend
                     builder =>
                     {
                         builder
-                            .WithOrigins("http://localhost:6420")
+                            .AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
+                            .AllowAnyHeader();
                     });
             });
 
@@ -77,8 +76,6 @@ namespace ExamCorrectionBackend
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExamCorrectionBackend v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

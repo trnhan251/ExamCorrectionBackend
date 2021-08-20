@@ -58,7 +58,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new GetAllStudentSolutionsFromExamTaskRequest() {ExamTaskId = examTaskId, UserId = userId};
             var results = await _mediator.Send(request);
-            return results != null ? Ok(results) : BadRequest();
+            return results != null ? (ActionResult<IEnumerable<StudentSolutionDto>>) Ok(results) : BadRequest();
         }
 
         // GET api/<StudentSolutionsController>/5
@@ -68,7 +68,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new GetStudentSolutionRequest() { StudentSolutionId = id, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<StudentSolutionDto>) Ok(result) : BadRequest();
         }
 
         // POST api/<StudentSolutionsController>
@@ -78,7 +78,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new CreateStudentSolutionRequest() { StudentSolutionDto = dto, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<StudentSolutionDto>) Ok(result) : BadRequest();
         }
 
         // PUT api/<StudentSolutionsController>/5
@@ -88,7 +88,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new UpdateStudentSolutionRequest() { StudentSolutionDto = dto, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<StudentSolutionDto>) Ok(result) : BadRequest();
         }
 
         // DELETE api/<StudentSolutionsController>/5
@@ -98,7 +98,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new DeleteStudentSolutionRequest() { StudentSolutionId = id, UserId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<StudentSolutionDto>) Ok(result) : BadRequest();
         }
 
         [HttpPost("Excel")]
@@ -194,7 +194,7 @@ namespace ExamCorrectionBackend.Controllers
             studentSolution.Score = scoreResult;
             var result = await _mediator.Send(new UpdateStudentSolutionRequest()
                 { StudentSolutionDto = studentSolution, UserId = GetUserIdFromHttpContext() });
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<StudentSolutionDto>) Ok(result) : BadRequest();
         }
 
         [HttpPost("{id}/AddIntoDataset")]
@@ -203,7 +203,7 @@ namespace ExamCorrectionBackend.Controllers
             var request = new CreateDatasetFromStudentSolutionRequest()
                 {StudentSolutionId = id, UserId = GetUserIdFromHttpContext()};
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<DatasetDto>) Ok(result) : BadRequest();
         }
 
         private string GetUserIdFromHttpContext()

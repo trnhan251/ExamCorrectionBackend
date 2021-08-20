@@ -41,7 +41,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new GetAllCoursesRequest() {OwnerId = userId};
             var results = await _mediator.Send(request);
-            return results != null ? Ok(results) : BadRequest();
+            return results != null ? (ActionResult<IEnumerable<string>>) Ok(results) : BadRequest();
         }
 
         // GET api/<CoursesController>/5
@@ -51,7 +51,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new GetCourseRequest() {CourseId = id, UserId = userId};
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<CourseDto>) Ok(result) : BadRequest();
         }
 
         // POST api/<CoursesController>
@@ -61,7 +61,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new CreateCourseRequest() {CourseDto = dto, OwnerId = userId};
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<CourseDto>) Ok(result) : BadRequest();
         }
 
         // PUT api/<CoursesController>/5
@@ -71,7 +71,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new UpdateCourseRequest() { CourseDto = dto, OwnerId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<CourseDto>) Ok(result) : BadRequest();
         }
 
         // DELETE api/<CoursesController>/5
@@ -81,7 +81,7 @@ namespace ExamCorrectionBackend.Controllers
             var userId = GetUserIdFromHttpContext();
             var request = new DeleteCourseRequest() { CourseId = id, OwnerId = userId };
             var result = await _mediator.Send(request);
-            return result != null ? Ok(result) : BadRequest();
+            return result != null ? (ActionResult<CourseDto>) Ok(result) : BadRequest();
         }
 
         private string GetUserIdFromHttpContext()
