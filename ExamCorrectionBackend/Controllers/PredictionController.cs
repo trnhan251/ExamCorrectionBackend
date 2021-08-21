@@ -33,11 +33,12 @@ namespace ExamCorrectionBackend.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonObject = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8,
                 "application/json");
-            using var httpResponse = await client.PostAsync("http://127.0.0.1:5002/api/predict", jsonObject);
+            using var httpResponse = await client.PostAsync("http://localhost:5000/api/predict", jsonObject);
             httpResponse.EnsureSuccessStatusCode();
             var responseBody = await httpResponse.Content.ReadAsStringAsync();
-            var scoreResult = Decimal.Parse(responseBody, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
-            return Ok(scoreResult);
+            var number = responseBody.Split('[')[1].Split(']')[0];
+            var scoreResult = Decimal.Parse(number, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
+            return Ok((scoreResult/5)*100);
         }
     }
 }

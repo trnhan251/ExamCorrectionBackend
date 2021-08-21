@@ -33,3 +33,9 @@ services:
     image: trnhan251/exam-ui
     ports:
       - "6420:80"
+  
+  nlp-service:
+    container_name: nlp-service
+    image: trnhan251/nlp-service
+    ports:
+      - "5000:5000"
